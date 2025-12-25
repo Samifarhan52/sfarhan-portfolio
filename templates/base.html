@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Farhan Portfolio</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Farhan Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-    <!-- JS -->
-    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
 </head>
 <body>
 
@@ -19,49 +16,25 @@
 
     <!-- LOGO -->
     <div class="nav-logo">
-  <a href="{{ url_for('index') }}">Farhan</a>
-</div>
-
+      <a href="{{ url_for('index') }}">Farhan</a>
+    </div>
 
     <!-- LINKS -->
     <div class="nav-links" id="navLinks">
+      <a href="{{ url_for('index') }}">Home</a>
+      <a href="{{ url_for('index') }}#projects">Projects</a>
+      <a href="{{ url_for('index') }}#contact">Contact</a>
 
-  <!-- Always go back to homepage -->
-  <a href="{{ url_for('index') }}" onclick="closeMenu()">Home</a>
-
-  <!-- Sections only exist on home -->
-  <a href="{{ url_for('index') }}#projects" onclick="closeMenu()">Projects</a>
-  <a href="{{ url_for('index') }}#contact" onclick="closeMenu()">Contact</a>
-
-  {% if session.get('user_id') %}
-    <div class="nav-links" id="navLinks">
-
-  <a href="{{ url_for('index') }}">Home</a>
-  <a href="{{ url_for('index') }}#projects">Projects</a>
-  <a href="{{ url_for('index') }}#contact">Contact</a>
-
-  {% if session.get("user_id") %}
-    <div class="nav-user">
-      <span class="nav-username">Hi, {{ session.get("user_name") }}</span>
-      <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+      {% if session.get("user_id") %}
+        <span class="nav-username">Hi, {{ session.get("user_name") }}</span>
+        <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+      {% else %}
+        <a href="{{ url_for('login') }}">Login</a>
+      {% endif %}
     </div>
-  {% else %}
-    <a href="{{ url_for('login') }}">Login</a>
-  {% endif %}
 
-</div>
-
-  {% else %}
-    <a href="{{ url_for('login') }}" onclick="closeMenu()">Login</a>
-  {% endif %}
-
-</div>
-
-
-
-    <!-- HAMBURGER -->
+    <!-- MOBILE TOGGLE -->
     <div class="nav-toggle" onclick="toggleMenu()">☰</div>
-
   </div>
 </nav>
 <!-- ========================================== -->
@@ -80,39 +53,11 @@
 <!-- PAGE CONTENT -->
 {% block content %}{% endblock %}
 
-<!-- PASSWORD VISIBILITY -->
-<script>
-function togglePassword(inputId, eyeId) {
-  const input = document.getElementById(inputId);
-  const eye = document.getElementById(eyeId);
-  if (!input || !eye) return;
-
-  if (input.type === "password") {
-    input.type = "text";
-    eye.textContent = "🙈";
-  } else {
-    input.type = "password";
-    eye.textContent = "👁️";
-  }
-}
-</script>
-
-<!-- MOBILE MENU -->
+<!-- MOBILE MENU SCRIPT -->
 <script>
 function toggleMenu() {
   const menu = document.getElementById("navLinks");
-  if (menu.style.display === "flex") {
-    menu.style.display = "none";
-  } else {
-    menu.style.display = "flex";
-  }
-}
-
-function closeMenu() {
-  const menu = document.getElementById("navLinks");
-  if (window.innerWidth <= 768) {
-    menu.style.display = "none";
-  }
+  menu.style.display = menu.style.display === "flex" ? "none" : "flex";
 }
 </script>
 
