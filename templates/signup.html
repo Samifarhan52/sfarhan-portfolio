@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block title %}Signup | Farhan Portfolio{% endblock %}
+
+{% block content %}
+<section class="section center-section fade-in">
+  <div class="container auth-container">
+    <div class="auth-card">
+
+      <h2 class="section-title">CREATE AN ACCOUNT</h2>
+      <p class="section-subtitle">Signup to try the projects</p>
+
+      {% if error %}
+        <p class="form-status error">{{ error }}</p>
+      {% endif %}
+
+      <form method="POST" class="form" onsubmit="return validatePasswords()">
+
+        <!-- Full Name -->
+        <div class="form-group floating">
+          <input type="text" name="name" required />
+          <label>Full Name</label>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group floating">
+          <input type="email" name="email" required />
+          <label>Email</label>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label>Password</label>
+
+          <div class="password-field">
+            <input
+              type="password"
+              name="password"
+              id="signup_password"
+              required
+              placeholder="Strong password"
+              oninput="checkStrength()"
+            />
+            <span class="eye-btn" onclick="togglePassword('signup_password', this)">👁️</span>
+          </div>
+
+          <!-- Strength Meter -->
+          <div class="strength">
+            <div id="strength-bar"></div>
+          </div>
+          <small id="strength-text" class="hint"></small>
+
+          <small class="hint">
+            Password must contain:
+            <ul>
+              <li>At least 8 characters</li>
+              <li>One capital letter (A–Z)</li>
+              <li>One number (0–9)</li>
+              <li>One special character (!@#$)</li>
+            </ul>
+          </small>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group">
+          <label>Confirm Password</label>
+
+          <div class="password-field">
+            <input
+              type="password"
+              id="confirm_password"
+              required
+              placeholder="Re-enter password"
+            />
+            <span class="eye-btn" onclick="togglePassword('confirm_password', this)">👁️</span>
+          </div>
+
+          <small id="confirm-error" class="error-text"></small>
+        </div>
+
+        <button type="submit" class="btn primary full-width">
+          Signup
+        </button>
+      </form>
+
+      <p class="auth-switch">
+        Already have an account?
+        <a href="{{ url_for('login') }}">Login</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+function togglePassword(id, el) {
+  const input = document.getElementById(id);
+  input.type = input.type === "password" ? "text" : "password";
+  el.textContent = input.type === "password" ? "👁️" : "🙈";
+}
+
+function checkStrength() {
+  const pwd = document.getElementById("signup_password").value;
+  const bar = document.getElementById("strength-bar");
+  const text = document.getElementById("strength-text");
+
+  let score = 0;
+  if (pwd.length >= 8) score++;
+  if (/[A-Z]/.test(pwd)) score++;
+  if (/[0-9]/.test(pwd)) score++;
+  if (/[^A-Za-z0-9]/.test(pwd)) score++;
+
+  bar.style.width = (score / 4) * 100 + "%";
+
+  if (score <= 1) text.textContent = "Weak password";
+  else if (score <= 3) text.textContent = "Medium strength";
+  else text.textContent = "Strong password";
+}
+
+function validatePasswords() {
+  const pwd = document.getElementById("signup_password").value;
+  const confirm = document.getElementById("confirm_password").value;
+  const error = document.getElementById("confirm-error");
+
+  if (pwd !== confirm) {
+    error.textContent = "Passwords do not match";
+    return false;
+  }
+  error.textContent = "";
+  return true;
+}
+</script>
+{% endblock %}

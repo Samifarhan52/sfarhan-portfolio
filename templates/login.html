@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Login | Farhan Portfolio{% endblock %}
+
+{% block content %}
+<section class="section center-section fade-in">
+  <div class="container auth-container">
+    <div class="auth-card">
+
+      <h2 class="section-title">Welcome Back</h2>
+      <p class="section-subtitle">Login to access your projects</p>
+
+      {% if error %}
+        <p class="form-status error">{{ error }}</p>
+      {% endif %}
+
+      <form method="POST" class="form">
+
+        <!-- Email -->
+        <div class="form-group floating">
+          <input type="email" id="email" name="email" required />
+          <label for="email">Email</label>
+        </div>
+
+        <!-- Password (NO floating here) -->
+        <div class="form-group">
+          <label>Password</label>
+
+          <div class="password-field">
+            <input
+              type="password"
+              id="login_password"
+              name="password"
+              required
+              placeholder="Enter your password"
+            />
+            <span
+              class="eye-btn"
+              onclick="togglePassword('login_password', this)"
+            >👁️</span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn primary full-width">
+          Login
+        </button>
+      </form>
+
+      <p class="auth-switch">
+        Don’t have an account?
+        <a href="{{ url_for('signup') }}">Create one</a>
+      </p>
+
+    </div>
+  </div>
+</section>
+{% endblock %}
