@@ -26,15 +26,16 @@
       <a href="{{ url_for('index') }}#contact">Contact</a>
 
       {% if session.get("user_id") %}
-        <span class="nav-username">Hi, {{ session.get("user_name") }}</span>
+        <span class="nav-user">Hi, {{ session.get("user_name") }}</span>
         <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
       {% else %}
         <a href="{{ url_for('login') }}">Login</a>
       {% endif %}
     </div>
 
-    <!-- MOBILE TOGGLE -->
+    <!-- HAMBURGER -->
     <div class="nav-toggle" onclick="toggleMenu()">☰</div>
+
   </div>
 </nav>
 <!-- ========================================== -->
@@ -58,6 +59,12 @@
 function toggleMenu() {
   const menu = document.getElementById("navLinks");
   menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+}
+</script>
+<script>
+function toggleMenu() {
+  const menu = document.getElementById("navLinks");
+  menu.classList.toggle("active");
 }
 </script>
 

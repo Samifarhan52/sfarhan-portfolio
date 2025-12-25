@@ -99,8 +99,10 @@ def login():
         conn.close()
 
         if user and check_password_hash(user["password_hash"], password):
-            session["user_id"] = user["id"]
-            return redirect(url_for("index"))
+    session["user_id"] = user["id"]
+    session["user_name"] = user["name"]   # ✅ THIS LINE
+    return redirect(url_for("index"))
+
 
         flash("Invalid credentials")
 
