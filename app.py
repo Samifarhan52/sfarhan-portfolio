@@ -212,6 +212,15 @@ def contact():
     flash("Message sent successfully")
     return redirect(url_for("index") + "#contact")
 
+@app.route("/download/<filename>")
+def download_pdf(filename):
+    from flask import send_from_directory
+    return send_from_directory(
+        directory=os.path.join(app.root_path, "static", "pdf"),
+        path=filename,
+        as_attachment=True
+    )
+
 # -----------------------------------------------------------------------------
 if __name__ == "__main__":
     app.run(debug=True)
